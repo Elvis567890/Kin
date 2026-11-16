@@ -1,0 +1,30 @@
+backend:
+  name: github
+  repo: Elvis567890/Kin
+  branch: main
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+collections:
+  - name: "apps"
+    label: "Manage Apps & Tech"
+    files:
+      - file: "src/content/apps.json"
+        label: "Apps List"
+        name: "apps_list"
+        fields:
+          - label: "Apps"
+            name: "apps"
+            widget: "list"
+            fields:
+              - {label: "App Name", name: "title", widget: "string"}
+              - {label: "Description", name: "desc", widget: "text"}
+              - {label: "App Image", name: "image", widget: "image", required: false}
+  - name: "settings"
+    label: "Website Settings"
+    files:
+      - file: "src/content/settings.json"
+        label: "Welcome Message"
+        name: "welcome_settings"
+        fields:
+          - {label: "Hero Title", name: "title", widget: "string"}
+          - {label: "Hero Subtitle", name: "subtitle", widget: "text"}

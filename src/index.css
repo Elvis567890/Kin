@@ -1,0 +1,9 @@
+:root { --navy: #0A192F; --gold: #D4AF37; --green: #00A86B; }
+body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: var(--navy); color: white; overflow-x: hidden; }
+@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+@keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); } 70% { box-shadow: 0 0 10px 10px rgba(212, 175, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-node { animation: pulse-gold 2s infinite; }
+.tech-card { background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
+.tech-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1); }
