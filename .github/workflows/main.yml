@@ -1,7 +1,7 @@
 name: Auto-Generate AFRINODE System
 
 on:
-  workflow_dispatch: # This allows you to click a button to run it
+  workflow_dispatch: # Allows you to click a button to run it
 
 permissions:
   contents: write # Allows the script to create files and push them to your repo
@@ -20,7 +20,7 @@ jobs:
           # Create Directories
           mkdir -p src/content public/admin
           
-          # 1. package.json
+          # 1. package.json (Fixes the previous error)
           cat << 'EOF' > package.json
           {
             "name": "afrinode-website",
@@ -79,7 +79,7 @@ jobs:
           )
           EOF
 
-          # 5. src/index.css
+          # 5. src/index.css (Animations)
           cat << 'EOF' > src/index.css
           :root { --navy: #0A192F; --gold: #D4AF37; --green: #00A86B; }
           body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: var(--navy); color: white; overflow-x: hidden; }
@@ -92,7 +92,7 @@ jobs:
           .tech-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1); }
           EOF
 
-          # 6. src/App.jsx (The Main Website & Animations)
+          # 6. src/App.jsx (Main Website)
           cat << 'EOF' > src/App.jsx
           import React, { useState } from 'react';
           import { motion } from 'framer-motion';
@@ -164,13 +164,12 @@ jobs:
           { "apps": [ { "title": "AI Integration", "desc": "Deploying intelligent machine learning models to solve complex African market challenges.", "image": "" }, { "title": "Mobile Apps", "desc": "Building fast, reliable, and beautiful mobile applications for the next billion users.", "image": "" }, { "title": "Cloud Infrastructure", "desc": "Scalable and secure server solutions designed to handle heavy data and traffic loads.", "image": "" } ] }
           EOF
 
-          # 9 & 10. Admin Panel
+          # 9 & 10. Admin Panel Files
           cat << 'EOF' > public/admin/index.html
           <!doctype html>
           <html><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>AFRINODE Admin</title></head><body><script src="https://unpkg.com/decap-cms@^3.1.10/dist/decap-cms.js"></script></body></html>
           EOF
 
-          # This uses GitHub magic to automatically insert your username/repo name into the config!
           cat << 'EOF' > public/admin/config.yml
           backend:
             name: github
@@ -204,26 +203,26 @@ jobs:
                     - {label: "Hero Subtitle", name: "subtitle", widget: "text"}
           EOF
 
-          # Replace the placeholder with your actual GitHub repo name automatically
+          # Automatically inject your GitHub Repo Name into the Admin Config
           sed -i "s|REPO_PLACEHOLDER|${{ github.repository }}|g" public/admin/config.yml
 
-      - name: 🚀 COMMIT FILES TO REPOSITORY
+      - name: 🚀 UPLOAD CODE TO REPOSITORY
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m "Auto-generated AFRINODE full system [skip ci]"
+          git commit -m "Auto-generated AFRINODE full system [skip ci]" || echo "No changes to commit"
           git push
 
-      - name: ⚙️ Setup Node.js
+      - name: 🛠️ RERUN/REBUILD - Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: 📦 Install Dependencies
+      - name: 📦 RERUN/REBUILD - Install Dependencies
         run: npm install
 
-      - name: 🏗️ Build Website
+      - name: 🏗️ RERUN/REBUILD - Build Website
         run: npm run build
 
       - name: 🌐 Setup Pages
